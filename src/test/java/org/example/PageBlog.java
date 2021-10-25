@@ -12,22 +12,22 @@ public class PageBlog {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
+
+    @FindBy(xpath = "//*[@id=\"entry_form\"]/div/div/p/a")
+    private WebElement delBtn;
+
     public void searchText(String inText) {
         WebElement searchField = driver.findElements(By.linkText(inText)).get(0);
         searchField.click();
     }
-    public void deleteEntry(){
-        WebElement searchField = driver.findElements(By.linkText("Удалить")).get(0);
+    public void deleteEntry(String inText){
+        WebElement searchField = driver.findElements(By.linkText(inText)).get(0);
         searchField.click();
     }
-    @FindBy(xpath = "//*[@id=\"content\"]/form/div/input[2]")
-    private WebElement delBtn;
 
     public void delBtn(){
         delBtn.click();
     }
-    // подтверждаем удаление
-    //*[@id="content"]/form/div/input[2]
-    //<input type="submit" value="Да, я уверен">
+
 
 }

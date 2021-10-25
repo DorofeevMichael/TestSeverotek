@@ -12,17 +12,15 @@ public class PageLogin {
         this.driver = driver; }
 
     //field USERNAME
-    @FindBy(xpath = "//*[contains(@id, 'id_username')]")
+    @FindBy(xpath = "//input[contains(@id,'id_username')]")
     private WebElement loginField;
 
     //field PASSWORD
-    @FindBy(xpath = "//*[contains(@id, 'id_password')]")
+    @FindBy(xpath = "//input[contains(@id, 'id_password')]")
     private WebElement passwdField;
 
     //buttonLOGIN
-    @FindBy(xpath = "//*[@id=\"login-form\"]/div[3]/input")
-    // тут исправить на нормальный хпас
-    //@FindBy(xpath = "//*[contains(text(), 'Войти')]")
+    @FindBy(xpath = "//input[@type='submit']")
     private WebElement loginBtn;
 
     //Input login

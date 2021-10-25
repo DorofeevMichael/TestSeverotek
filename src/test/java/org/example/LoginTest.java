@@ -18,6 +18,7 @@ public class LoginTest {
     public static PageAddEntry pageAddEntry;
     public static PageEntry pageEntry;
     public static PageBlog pageBlog;
+    public static PageDeleteEntry pageDeleteEntry;
 
     @BeforeClass
     public static void setup() {
@@ -34,6 +35,7 @@ public class LoginTest {
         pageAddEntry = new PageAddEntry(driver);
         pageEntry = new PageEntry(driver);
         pageBlog = new PageBlog(driver);
+        pageDeleteEntry = new PageDeleteEntry(driver);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get(ConfProperties.getProperty("loginpage"));
@@ -65,13 +67,14 @@ public class LoginTest {
         //transition to Blog
         driver.navigate().to(ConfProperties.getProperty("pageBlog"));
         // find saved Entry
-        Assert.assertEquals(driver.findElement(By.xpath("//div[@id='entries']//a[@class='entry_title']")).getText(), inTitle);
-
         pageBlog.searchText(inTitle);
-        pageBlog.driver.get(ConfProperties.getProperty("pageBlogEntry"));
-        //pageBlog.searchText();
-        pageBlog.deleteEntry();
+        //Assert.assertEquals(driver.findElement(By.xpath("//div[@id='entries']//a[@class='entry_title']")).getText(), inTitle);
+        driver.navigate().to(ConfProperties.getProperty("pageBlogEntry"));
+        // delete Entry
+        pageBlog.deleteEntry(inTitle);
         pageBlog.delBtn();
+        // confirm delete Entry
+        pageDeleteEntry.delBtn();
     }
     @AfterClass
     public static void tearDown() {
