@@ -4,7 +4,6 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -14,8 +13,8 @@ import java.util.concurrent.TimeUnit;
 
 public class LoginTest {
     public static WebDriver driver;
-    public static PageControlPanel controlPanel;
     public static PageLogin pageLogin;
+    public static PageControlPanel pageControlPanel;
     public static PageAddEntry pageAddEntry;
     public static PageEntry pageEntry;
     public static PageBlog pageBlog;
@@ -35,7 +34,7 @@ public class LoginTest {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get(ConfProperties.getProperty("loginpage"));
 
-        controlPanel = new PageControlPanel(driver);
+        pageControlPanel = new PageControlPanel(driver);
         pageLogin = new PageLogin(driver);
         pageAddEntry = new PageAddEntry(driver);
         pageEntry = new PageEntry(driver);
@@ -51,9 +50,9 @@ public class LoginTest {
         // enter button
         pageLogin.clickLoginBtn();
         // find Control Panel
-        Assert.assertEquals("Title not displayed for Control Panel page", controlPanel.getTitle(), "Панель управления");
+        Assert.assertEquals("Title not displayed for Control Panel page", pageControlPanel.getTitle(), "Панель управления");
         // click button Add
-        controlPanel.clickAddBtn();
+        pageControlPanel.clickAddBtn();
         // find Add Entry
         Assert.assertEquals("Title not displayed for AddEntry page", pageAddEntry.getTitle(), "Добавить entry");
         // enter fields

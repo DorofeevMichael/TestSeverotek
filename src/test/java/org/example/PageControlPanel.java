@@ -7,6 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class PageControlPanel {
     public WebDriver driver;
+
     public PageControlPanel(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;

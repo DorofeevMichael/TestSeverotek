@@ -16,6 +16,7 @@ public class PageBlog {
 
     @FindBy(xpath = "//div[@class='submit-row']//a[@class='deletelink']")
     private WebElement delBtn;
+
     @FindBy(xpath = "//div[@id='entries']//a[@class='entry_title']")
     private WebElement title;
 
