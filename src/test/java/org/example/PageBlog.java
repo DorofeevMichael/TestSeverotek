@@ -8,26 +8,33 @@ import org.openqa.selenium.support.PageFactory;
 
 public class PageBlog {
     public WebDriver driver;
+
     public PageBlog(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
 
-    @FindBy(xpath = "//*[@id=\"entry_form\"]/div/div/p/a")
+    @FindBy(xpath = "//div[@class='submit-row']//a[@class='deletelink']")
     private WebElement delBtn;
+    @FindBy(xpath = "//div[@id='entries']//a[@class='entry_title']")
+    private WebElement title;
+
+    public String getTitle() {
+        return title.getText();
+    }
 
     public void searchText(String inText) {
         WebElement searchField = driver.findElements(By.linkText(inText)).get(0);
         searchField.click();
     }
-    public void deleteEntry(String inText){
+
+    public void deleteEntry(String inText) {
         WebElement searchField = driver.findElements(By.linkText(inText)).get(0);
         searchField.click();
     }
 
-    public void delBtn(){
+    public void delBtn() {
         delBtn.click();
     }
-
 
 }

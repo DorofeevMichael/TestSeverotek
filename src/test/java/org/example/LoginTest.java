@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 public class LoginTest {
     public static WebDriver driver;
+    public static PageControlPanel controlPanel;
     public static PageLogin pageLogin;
     public static PageAddEntry pageAddEntry;
     public static PageEntry pageEntry;
@@ -30,15 +31,16 @@ public class LoginTest {
             System.setProperty("webdriver.firefox.driver", ConfProperties.getProperty("geckodriver"));
             driver = new FirefoxDriver();
         }
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.get(ConfProperties.getProperty("loginpage"));
 
+        controlPanel = new PageControlPanel(driver);
         pageLogin = new PageLogin(driver);
         pageAddEntry = new PageAddEntry(driver);
         pageEntry = new PageEntry(driver);
         pageBlog = new PageBlog(driver);
         pageDeleteEntry = new PageDeleteEntry(driver);
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get(ConfProperties.getProperty("loginpage"));
     }
     @Test
     public void loginTest() {
@@ -49,35 +51,34 @@ public class LoginTest {
         // enter button
         pageLogin.clickLoginBtn();
         // find Control Panel
-        int panUpr = driver.findElements(By.xpath("//h1" + "" + "[text()='Панель управления']")).size();
-        Assert.assertTrue(panUpr > 0);
+        Assert.assertEquals("Title not displayed for Control Panel page", controlPanel.getTitle(), "Панель управления");
         // click button Add
-        pageAddEntry.clickAddBtn();
+        controlPanel.clickAddBtn();
         // find Add Entry
-        int addEntry = driver.findElements(By.xpath("//h1" + "" + "[text()='Добавить entry']")).size();
-        Assert.assertTrue(addEntry > 0);
+        Assert.assertEquals("Title not displayed for AddEntry page", pageAddEntry.getTitle(), "Добавить entry");
         // enter fields
         String inTitle = "title" + getRnd(10);
-        pageEntry.inputTitle(inTitle);
-        pageEntry.inputSlug("slug" + getRnd(10));
-        pageEntry.inputTextM("text" + getRnd(10));
-        pageEntry.inputText("Text" + getRnd(10));
+        pageAddEntry.inputTitle(inTitle);
+        pageAddEntry.inputSlug("slug" + getRnd(10));
+        pageAddEntry.inputTextM("text" + getRnd(10));
+        pageAddEntry.inputText("Text" + getRnd(10));
         // click button Save
-        pageEntry.clickSaveBtn();
+        pageAddEntry.clickSaveBtn();
         //transition to Blog
         driver.navigate().to(ConfProperties.getProperty("pageBlog"));
         // find saved Entry
+        Assert.assertEquals("Title not displayed for Blog page", pageBlog.getTitle(), inTitle);
         pageBlog.searchText(inTitle);
-        //Assert.assertEquals(driver.findElement(By.xpath("//div[@id='entries']//a[@class='entry_title']")).getText(), inTitle);
+        //transition to BlogEntry
         driver.navigate().to(ConfProperties.getProperty("pageBlogEntry"));
         // delete Entry
-        pageBlog.deleteEntry(inTitle);
-        pageBlog.delBtn();
+        pageBlog.deleteEntry(inTitle);//
+        pageBlog.delBtn();//
         // confirm delete Entry
         pageDeleteEntry.delBtn();
     }
     @AfterClass
-    public static void tearDown() {
+    public static void exitSite() {
         driver.quit();
     }
 

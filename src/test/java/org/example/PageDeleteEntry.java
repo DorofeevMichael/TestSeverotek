@@ -11,10 +11,10 @@ public class PageDeleteEntry {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
-    @FindBy(xpath = "//*[@id=\"content\"]/form/div/input[2]")
+    @FindBy(xpath = "//*[@id='content']//input[@type='submit']")
     private WebElement delBtn;
 
-    //подтверждаем удаление
+    //submit Delete
     public void delBtn(){
         delBtn.click();
     }

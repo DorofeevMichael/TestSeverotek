@@ -12,20 +12,48 @@ public class PageAddEntry {
         this.driver = driver;
     }
 
-    // find Control Panel
-    //public boolean findCP() {
-    //    panUpr = driver.findElements(By.xpath("//h1" + "" + "[text()='Панель управления']")).size();
-    //    return panUpr;
-    //}
+    // find "Blog-Entries-Add"
+    @FindBy(xpath = "//div[@id='content']/h1")
+    private WebElement title;
 
-    // find "Blog-Entries-Добавить"
-    // тута нада нормальный икспасс
-    @FindBy(xpath = "//*[@id=\"module_2\"]/div/ul[1]/li[1]/ul/li[1]/a/span")
-    private WebElement clickLink;
+    // find fields
+    @FindBy(xpath = "//*[contains(@id, 'id_title')]")
+    private WebElement titleField;
 
-    // enter Add
-    public void clickAddBtn() {
-        clickLink.click();
+    @FindBy(xpath = "//*[contains(@id, 'id_slug')]")
+    private WebElement slugField;
+
+    @FindBy(xpath = "//textarea[@id='id_text_markdown']")
+    private WebElement textmField;
+
+    @FindBy(xpath = "//*[@id='id_text']")
+    private WebElement textField;
+
+    // find button Save
+    @FindBy(xpath = "//div[@class='submit-row']/input[@name='_save']")
+    private WebElement saveBtn;
+
+    public void clickSaveBtn() {
+        saveBtn.click();}
+
+    public String getTitle(){
+        return title.getText();
+    }
+    //Input fields
+    public void inputTitle(String title) {
+        titleField.sendKeys(title);
     }
 
+    public void inputSlug(String slug) {
+        slugField.clear();
+        slugField.sendKeys(slug);
+    }
+
+    public void inputTextM(String textm) {
+        textmField.sendKeys(textm);
+    }
+
+    public void inputText(String inText) {
+        textField.sendKeys(inText);
+    }
 }
